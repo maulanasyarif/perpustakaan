@@ -43,7 +43,7 @@ class LoanController extends Controller
         $return_date;
         $phone_number;
 
-        DB::table('return')->where('id', $request->no_identify  )->insert([
+        DB::table('return')->where('id', $request->no_identify)->insert([
             'no_identify'       => $no_identify,
             'book_title'        => $book_title,
             'name'              => $name,
