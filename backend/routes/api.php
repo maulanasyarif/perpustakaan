@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\LoanController;
+use App\Http\Controllers\ReturnController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,11 @@ Route::delete('delete-books/{id}', [BookController::class, 'destroy']);
 
 //loan
 Route::get('/loans', [LoanController::class, 'index']);
+Route::post('/toReturn', [LoanController::class, 'toReturn']);
+
+//return
+Route::get('/return', [ReturnController::class, 'index']);
+Route::delete('delete-return/{id}', [ReturnController::class, 'destroy']);
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
