@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Books;
 
 class BookController extends Controller
@@ -21,10 +22,13 @@ class BookController extends Controller
     {
 
         $rules = $request->validate([
-            'title'     => 'required',
-            'desc'      => 'required',
-            'writer'    => 'required',
-            'stock'     => 'required',
+            'title'                 => 'required',
+            'author'                => 'required',
+            'publisher'             => 'required',
+            'year_publisher'        => 'required',
+            'isbn'                  => 'required',
+            'book_number'           => 'required',
+            'location'              => 'required',
         ]);
 
         if(!$rules)
@@ -36,10 +40,13 @@ class BookController extends Controller
         } 
         else {
             $books = new Books;
-            $books->title    = $request->title;
-            $books->desc     = $request->desc;
-            $books->writer   = $request->writer;
-            $books->stock    = $request->stock;
+            $books->title               = $request->title;
+            $books->author              = $request->author;
+            $books->publisher           = $request->publisher;
+            $books->year_publisher      = $request->year_publisher;
+            $books->isbn                = $request->isbn;
+            $books->book_number         = $request->book_number;
+            $books->location            = $request->location;
             $books->save();
             
             return response()->json([
@@ -70,21 +77,23 @@ class BookController extends Controller
 
     public function update(Request $request, $id)
     {
-        
         $rules = $request->validate([
-            'title'     => 'required',
-            'desc'      => 'required',
-            'writer'    => 'required',
-            'stock'     => 'required',
+            'title'                 => 'required',
+            'author'                => 'required',
+            'publisher'             => 'required',
+            'year_publisher'        => 'required',
+            'isbn'                  => 'required',
+            'book_number'           => 'required',
+            'location'              => 'required',
         ]);
-        
+
         if(!$rules)
         {
             return response()->json([
                 'status'=> 422,
-                'validationErrors'=> $validator->messages(),
+                'validate_err'=> $validator->messages(),
             ]);
-        }
+        } 
         else {
             $books = Books::find($id);
             
@@ -96,10 +105,13 @@ class BookController extends Controller
                 ]);
             }
             else {
-                $books->title    = $request->title;
-                $books->desc     = $request->desc;
-                $books->writer   = $request->writer;
-                $books->stock    = $request->stock;
+                $books->title               = $request->title;
+                $books->author              = $request->author;
+                $books->publisher           = $request->publisher;
+                $books->year_publisher      = $request->year_publisher;
+                $books->isbn                = $request->isbn;
+                $books->book_number         = $request->book_number;
+                $books->location            = $request->location;
                 $books->update();
 
                 return response()->json([

@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\LoanController;
 use App\Http\Controllers\ReturnController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\MemberController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,12 +28,16 @@ Route::delete('delete-books/{id}', [BookController::class, 'destroy']);
 
 //loan
 Route::get('/loans', [LoanController::class, 'index']);
-Route::post('/toReturn', [LoanController::class, 'toReturn']);
+Route::put('/updateLoan', [LoanController::class, 'update']);
+Route::get('/users', [MemberController::class, 'index']);
 
 //return
 Route::get('/return', [ReturnController::class, 'index']);
 Route::delete('delete-return/{id}', [ReturnController::class, 'destroy']);
 
+//login
+Route::post('/login', [LoginController::class, 'login']);
+Route::post('/register', [LoginController::class, 'register']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

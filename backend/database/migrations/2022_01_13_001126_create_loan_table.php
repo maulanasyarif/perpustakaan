@@ -16,11 +16,12 @@ class CreateLoanTable extends Migration
         Schema::create('loan', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('no_identify');
-            $table->string('book_title');
+            $table->string('book_id');
             $table->string('name');
             $table->date('loan_date');
             $table->date('return_date');
             $table->string('phone_number');
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }

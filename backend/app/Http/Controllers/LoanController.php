@@ -20,43 +20,30 @@ class LoanController extends Controller
     }
 
     //parsing to return table
-    public function toReturn(Request $request)
+    public function update(Request $request)
     {
-        $data = Loan::where($request->id)->get();
+        $id     = $request->id;
+        $status = $request->status;
 
-        foreach($data as $dt)
-        {
-            $id             = $request->id;
-            $no_identify    = $request->no_identify;
-            $book_title     = $request->book_title;
-            $name           = $request->name;
-            $loan_date      = $request->loan_date;
-            $return_date    = $request->return_date;
-            $phone_number   = $request->phone_number;
-        }
-
-        $id;
-        $no_identify;
-        $book_title;
-        $name;
-        $loan_date;
-        $return_date;
-        $phone_number;
-
-        DB::table('return')->where('id', $request->no_identify)->insert([
-            'no_identify'       => $no_identify,
-            'book_title'        => $book_title,
-            'name'              => $name,
-            'loan_date'         => $loan_date,
-            'return_date'       => $return_date,
-            'phone_number'      => $phone_number,
-        ]);
-
-        $delete = Loan::find($id, 'id')->delete();
+        $loan   = Loan::all();
         
-        return response()->json([
-            'status'    => 200,
-            'message'   => 'Data has been moved to return',
-        ]);
+        if(!$loan)
+        {
+            return response()->json([
+                'status'=> 404,
+                'message' => 'Data not Found',
+            ]);
+        } else {
+
+            $loan = new Loan;
+            $loan->status = $request->status;
+            $loan->save();
+
+            return response()->json([
+                'status'    => 200,
+                'message'   => 'Status has been update',
+            ]);           
+        }
     }
+
 }
